@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1 class="title">
+        <i class="ri-function-line"></i>
+        Naïve Bayes Text Classification
+    </h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    <i class="ri-error-warning-line"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <form method="POST">
+        <div class="data-input">
+            <!-- Existing input for prediction -->
+                        
+            <!-- Table of sentences and labels -->
+            <table id="dataTable" class="data-table">
+                <thead>
+                    <tr>
+                        <th>Sentence</th>
+                        <th>Label</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="sentence[]" value="A great game" class="input-field"></td>
+                        <td><input type="text" name="label[]" value="Sports" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="sentence[]" value="The election was over" class="input-field"></td>
+                        <td><input type="text" name="label[]" value="Not Sports" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="sentence[]" value="Very clean match" class="input-field"></td>
+                        <td><input type="text" name="label[]" value="Sports" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="sentence[]" value="A clean but forgettable game" class="input-field"></td>
+                        <td><input type="text" name="label[]" value="Sports" class="input-field"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="sentence[]" value="It was a close election" class="input-field"></td>
+                        <td><input type="text" name="label[]" value="Not Sports" class="input-field"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="btn-group">
+                <button type="button" onclick="addRow()" class="btn btn-secondary">
+                    <i class="ri-add-line"></i> Add Row
+                </button>
+                <button type="button" onclick="deleteRow()" class="btn btn-secondary">
+                    <i class="ri-delete-bin-line"></i> Delete Row
+                </button>
+            </div>
+            
+            <div class="input-group">
+                <label for="predict" class="input-label">Enter prediction sentence:</label>
+                <input type="text" id="predict" name="predict" value="A very close game" class="input-field">
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="ri-calculator-line"></i> Predict
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+function addRow() {
+    const table = document.getElementById("dataTable");
+    const row = table.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    
+    cell1.innerHTML = '<input type="text" name="sentence[]" value="New sentence" class="input-field">';
+    cell2.innerHTML = '<input type="text" name="label[]" value="New label" class="input-field">';
+}
+
+function deleteRow() {
+    const table = document.getElementById("dataTable");
+    if (table.rows.length > 2) {
+        table.deleteRow(table.rows.length - 1);
+    }
+}
+</script>
+
+{% endblock %}

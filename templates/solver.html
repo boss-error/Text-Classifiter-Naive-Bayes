@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1 class="title">
+        <i class="ri-line-chart-line"></i>
+       Naïve Bayes Results
+    </h1>
+    
+    <div class="result-section">
+        <h2 class="step-title fade-in" id="data-table">
+            <i class="ri-table-line"></i>
+            Data Table and Calculations
+        </h2>
+        <div class="math-display fade-in" id="data-table-content">
+            {{ table_latex|safe }}
+        </div>
+
+        <h2 class="step-title fade-in" id="equations">
+            <i class="ri-functions-line"></i>
+            Equations Used
+        </h2>
+        <div class="math-display fade-in" id="equations-content">
+            {{ equations_latex|safe }}
+        </div>
+
+        <h2 class="step-title fade-in" id="steps">
+            <i class="ri-list-check-2"></i>
+            Step by Step Solution
+        </h2>
+        <div class="math-display fade-in" id="steps-content">
+            {{ steps_latex|safe }}
+        </div>
+
+        <h2 class="step-title fade-in" id="final-result">
+            <i class="ri-check-double-line"></i>
+            Final Result
+        </h2>
+        <div class="math-display fade-in" id="result-content">
+            {{ result_latex|safe }}
+        </div>
+    </div>
+
+    <a href="{{ url_for('home') }}" class="back-link">
+        <i class="ri-arrow-left-line"></i>
+        Back to Calculator
+    </a>
+</div>
+
+<script>
+    window.onload = function() {
+        let delay = 0;
+
+        const sections = [
+            'data-table', 
+            'data-table-content', 
+            'equations', 
+            'equations-content', 
+            'steps', 
+            'steps-content', 
+            'final-result', 
+            'result-content'
+        ];
+
+        sections.forEach((section, index) => {
+            setTimeout(() => {
+                document.getElementById(section).classList.add('visible');
+            }, delay);
+            delay += 500;  // Adjust this for how slow/fast the appearance is
+        });
+    };
+</script>
+
+<style>
+    .fade-in {
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+    }
+</style>
+
+{% endblock %}
